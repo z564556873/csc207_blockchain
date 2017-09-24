@@ -49,8 +49,27 @@ public class BlockChain {
 	}
 	public boolean isValidBlockChain(){
 		Node temp = this.first;
-		while(first.next!=null){
-			
+		boolean ret = true;
+		while(temp.next!=null){
+			if (temp.data.curHash!=temp.next.data.preHash){
+				ret = false;
+			}
 		}
+		return ret;
+	}
+	public void printBalances(){
+		int total = this.first.data.amount;
+		int alice = 0;
+		int bob;
+		Node temp = this.first;
+		while (temp.next!=null){
+			alice +=temp.data.amount;
+			temp = temp.next;
+		}
+		bob = total - alice;
+		System.out.printf("Alice:%d, Bob:%d", alice, bob);
+		
+		
+		
 	}
 }
