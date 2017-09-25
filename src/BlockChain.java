@@ -1,3 +1,4 @@
+import java.security.NoSuchAlgorithmException;
 
 public class BlockChain {
 	Node first;
@@ -5,18 +6,18 @@ public class BlockChain {
 	class Node{
 		Block data;
 		Node next;
-		
-		Node(Block data){
+
+		Node(Block data, Node next){
 			this.data = data;
-			this.next = null;
+			this.next = next;
 		}
 	}
-	public BlockChain(int initial){
+	public BlockChain(int initial) throws NoSuchAlgorithmException {
 		Block start = new Block(0, initial,null);
-		this.first=new Node(start);
+		this.first=new Node(start, null);
 		this.last=this.first;
 	}
-	public Block mine(int amount){
+	public Block mine(int amount) throws NoSuchAlgorithmException{
 		return new Block(this.last.data.num+1, amount,this.last.data.curHash);
 	}
 	public int getSize(){
@@ -26,9 +27,9 @@ public class BlockChain {
 		if (blk.preHash!=this.last.data.curHash){
 			throw new IllegalArgumentException("invalid block");
 		}else{
-		Node added = new Node(blk);
-		this.last.next=added;
-		this.last = added;
+			Node added = new Node(blk,null);
+			this.last.next=added;
+			this.last = added;
 		}
 	}
 	public boolean removeLast(){
@@ -67,9 +68,8 @@ public class BlockChain {
 			temp = temp.next;
 		}
 		bob = total - alice;
-		System.out.printf("Alice:%d, Bob:%d", alice, bob);
-		
-		
-		
+		Object[] args = new Object[]{new Integer[alice], new Integer[bob]};
+		System.out.printf("Alice: %d, Bob: %d", args);
+
 	}
 }
